@@ -1,8 +1,8 @@
 package com.example.example.controller;
 
 import com.example.example.bean.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +22,19 @@ public class StudentController {
         students.add(new Student(2, "John Rich", 27));
         students.add(new Student(3, "Jane Smith", 22));
         return students;
+    }
+
+    @GetMapping("/student/{id}")
+    public Student studentPathVariable(@PathVariable int id) {
+        return new Student(id, "Someone", 0);
+    }
+
+    @PostMapping("/student/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String createStudent(@RequestBody Student student) {
+        System.out.println(student.getId());
+        System.out.println(student.getName());
+        System.out.println(student.getAge());
+        return "Student created: " + student.getName();
     }
 }
