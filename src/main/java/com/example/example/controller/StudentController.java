@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students")
 public class StudentController {
 
     @GetMapping("/student")
@@ -18,7 +19,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/students")
+    @GetMapping("/")
     public List<Student> getStudents() {
         List<Student> students = new ArrayList<>();
         students.add(new Student(2, "John Rich", 27));
@@ -26,12 +27,12 @@ public class StudentController {
         return students;
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     public Student studentPathVariable(@PathVariable int id) {
         return new Student(id, "Someone", 0);
     }
 
-    @PostMapping("/student/create")
+    @PostMapping("/create")
     //@ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
