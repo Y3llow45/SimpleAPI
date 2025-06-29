@@ -2,6 +2,7 @@ package com.example.example.controller;
 
 import com.example.example.bean.Student;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -11,9 +12,10 @@ import java.util.List;
 public class StudentController {
 
     @GetMapping("/student")
-    public Student getStudent() {
+    public ResponseEntity<Student> getStudent() {
         Student student = new Student(1, "John Doe", 20);
-        return student;
+        //return new ResponseEntity<>(student, HttpStatus.OK);
+        return ResponseEntity.ok(student);
     }
 
     @GetMapping("/students")
@@ -30,11 +32,13 @@ public class StudentController {
     }
 
     @PostMapping("/student/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String createStudent(@RequestBody Student student) {
+    //@ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createStudent(@RequestBody Student student) {
         System.out.println(student.getId());
         System.out.println(student.getName());
         System.out.println(student.getAge());
-        return "Student created: " + student.getName();
+        //return "Student created: " + student.getName();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Student created: " + student.getName());
     }
 }
